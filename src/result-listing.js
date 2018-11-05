@@ -8,6 +8,15 @@ class ResultListing extends Component {
     return (
 			<div id='listing'>
 				<h1 className='listing-title'>SF Chinese Food</h1>
+				<div className='search-box-wrap'>
+					<input 
+						type='text' 
+						aria-labelledby='filter' 
+						placeholder='Search by restaurant name'
+						className='search-box'
+						role='search'
+						/>
+				</div>
 				<ol className='restaurant-listing'>
 					{fetchedVenues.map((fectchedVenue) => (
 						<div key={fectchedVenue.venue.id}>

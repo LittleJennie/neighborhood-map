@@ -8,11 +8,21 @@
   font-size: 10pt;
   text-align: center;
   border: 10px solid navy;
-  border-radius: 2.5px;
+  border-radius: 2.5px; 
+  display: wrap;
+  flex-direction: column;
 }
 .listing-title {
   letter-spacing: 1px;
-  font-size: 10pt;
+  font-size: 14pt;
+}
+.restaurant-listing {
+  padding: 10px;
+}
+.search-box {
+  border: 1px solid navy;
+  border-radius: 2.5px;
+  padding: 5px;
 }
 .individual-listing {
   text-align: left;
