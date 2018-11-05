@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ResultListing from './result-listing'
 import axios from 'axios';
 import './App.css';
 
@@ -74,6 +75,7 @@ class App extends Component {
   render() {
     return (
       <div className='app'>
+        <ResultListing />
         <div id='map'>
         </div>
       </div>

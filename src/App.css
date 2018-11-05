@@ -1,5 +1,13 @@
+.app {
+  display: flex;
+  flex: wrap;
+}
+#listing {
+  width: 20%;
+}
 #map {
   height: 100vh;
+  width: 80%;
 }
 /* Optional: Makes the sample page fill the window. */
 html, body {
