@@ -53,12 +53,21 @@ class App extends Component {
       zoom: 8
     });
 
+    const infowindow = new window.google.maps.InfoWindow();
+
     this.state.venues.map((fetchedVenue) => {
-      var marker = new window.google.maps.Marker({
+      const marker = new window.google.maps.Marker({
         position: {lat: fetchedVenue.venue.location.lat, lng: fetchedVenue.venue.location.lng},
         map: map,
         title: fetchedVenue.venue.name
       });
+
+      const infoWindowContent = `${fetchedVenue.venue.name}`
+
+      marker.addListener('click', function(){
+        infowindow.setContent(infoWindowContent)
+        infowindow.open(map, marker)
+      })
     })
   })
 
