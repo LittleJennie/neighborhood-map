@@ -20,7 +20,6 @@ class App extends Component {
 
   componentDidMount () {
     this.getVenue()
-    this.renderMap()
   }
 
   renderMap = () => {
@@ -40,7 +39,7 @@ class App extends Component {
     }
     axios.get(fsVenueRecEndPoint + new URLSearchParams(param))
       .then((res) => {
-        this.setState({venues: res.data.response.groups[0].items})
+        this.setState({venues: res.data.response.groups[0].items}, this.renderMap())
       })
       .catch((error) => {
         console.log("Error! " + error)
@@ -52,6 +51,14 @@ class App extends Component {
     const map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: -34.397, lng: 150.644},
       zoom: 8
+    });
+
+    this.state.venues.map((fetchedVenue) => {
+      var marker = new window.google.maps.Marker({
+        position: {lat: fetchedVenue.venue.location.lat, lng: fetchedVenue.venue.location.lng},
+        map: map,
+        title: fetchedVenue.venue.name
+      });
     })
   })
 
