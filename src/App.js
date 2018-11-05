@@ -14,7 +14,6 @@ function loadGoogleMapScript(url) {
 
 
 class App extends Component {
-
   state = {
     venues: []
   }
@@ -40,6 +39,7 @@ class App extends Component {
     }
     axios.get(fsVenueRecEndPoint + new URLSearchParams(param))
       .then((res) => {
+        // console.log(res.data.response.groups[0])
         this.setState({venues: res.data.response.groups[0].items}, this.renderMap())
       })
       .catch((error) => {
@@ -73,9 +73,12 @@ class App extends Component {
   })
 
   render() {
+    console.log(this.state.venues)
     return (
       <div className='app'>
-        <ResultListing />
+        <ResultListing 
+          fetchedVenues={this.state.venues}
+        />
         <div id='map'>
         </div>
       </div>

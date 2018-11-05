@@ -14,6 +14,14 @@
   letter-spacing: 1px;
   font-size: 10pt;
 }
+.individual-listing {
+  text-align: left;
+  margin-bottom: 10px;
+  list-style: none;
+}
+a {
+  cursor: pointer;
+}
 #map {
   height: 100vh;
   width: 80%;
