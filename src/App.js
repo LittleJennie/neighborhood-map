@@ -33,8 +33,8 @@ class App extends Component {
     const param = {
       client_id: 'VJ4TVWJKEV4ED41VJ4GLAEEDCLYSST4J35DMEP4FCDCPD1G4',
       client_secret: 'ZUAMLAFVTGPRWPLO0MVEM3OUW3LS2M00KVR5FJGCWXQZ5JLA',
-      query: 'food',
-      near: 'Sydney',
+      query: 'Chinese food',
+      near: 'San Francisco',
       v: "20182507"
     }
     axios.get(fsVenueRecEndPoint + new URLSearchParams(param))
@@ -49,8 +49,8 @@ class App extends Component {
 
   initMap = (() => {
     const map = new window.google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
-      zoom: 8
+      center: {lat: 37.7700021, lng: -122.4492177},
+      zoom: 13
     });
 
     const infowindow = new window.google.maps.InfoWindow();
