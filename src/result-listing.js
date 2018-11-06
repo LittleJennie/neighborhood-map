@@ -1,9 +1,32 @@
 import React, { Component } from 'react';
+import escapeRegExp from 'escape-string-regexp'
+import sortBy from 'sort-by'
 
 class ResultListing extends Component {
+	state ={
+		query: ''
+	}
+
+	updateQuery = (query) => (
+		this.setState({query: query.trim() })
+	)
+
+	clearQuery = () => (
+		this.setState({query: ''})
+	)
+
   render() {
 		const { fetchedVenues } = this.props;
-		console.log(fetchedVenues)
+		const { query } = this.state;
+
+		let showingVenues; 
+		if (query) {
+			const match = new RegExp (escapeRegExp(query), 'i');
+			showingVenues = fetchedVenues.filter((fectchedVenue) => match.test(fectchedVenue.venue.name))
+		} else {
+			showingVenues = fetchedVenues;
+		}
+		showingVenues.sort(sortBy('name'));
 
     return (
 			<div id='listing'>
@@ -15,13 +38,16 @@ class ResultListing extends Component {
 						placeholder='Search by restaurant name'
 						className='search-box'
 						role='search'
+						value={query}
+						onChange={(e) => this.updateQuery(e.target.value)}
 						/>
 				</div>
+
 				<ol className='restaurant-listing'>
-					{fetchedVenues.map((fectchedVenue) => (
-						<div key={fectchedVenue.venue.id}>
+					{showingVenues.map((showingVenue) => (
+						<div key={showingVenue.venue.id}>
 							<li className="individual-listing" >
-								<a role='button'>{fectchedVenue.venue.name}</a>
+								<a role='button'>{showingVenue.venue.name}</a>
 							</li>
 						</div>
 					))}
