@@ -1,32 +1,36 @@
 import React, { Component } from 'react';
+import escapeRegExp from 'escape-string-regexp'
 import ResultListing from './result-listing'
+import Map from './Map'
 import axios from 'axios';
 import './App.css';
 
-function loadGoogleMapScript(url) {
-  const index = window.document.getElementsByTagName('script')[0];
-  const script = window.document.createElement('script');
-  script.src = url;
-  script.async = true;
-  script.defer = true;
-  index.parentNode.insertBefore(script, index)
-}
-
-
 class App extends Component {
-  state = {
-    venues: []
+  constructor(props) {
+    super(props)
+    this.venues = []
+    this.state = {
+      displayVenues: [],
+    }
+    this.updateDisplayVenues = this.updateDisplayVenues.bind(this)
   }
-
+  
   componentDidMount () {
     this.getVenue()
   }
 
-  renderMap = () => {
-    loadGoogleMapScript("https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=AIzaSyBJhg8V9CYH7XONDGiFh-s7hnDqZxNScmE&v=3&callback=initMap"
-    )
-    window.initMap = this.initMap;
-  }
+  updateDisplayVenues = ((query) => {
+    if (query) {
+      const match = new RegExp(escapeRegExp(query), 'i');
+      this.setState(prevState => ({
+        displayVenues: prevState.displayVenues.filter((fectchedVenue) => match.test(fectchedVenue.venue.name))
+      }))
+    } else {
+      this.setState({
+        displayVenues: this.venues
+      })
+    }
+  })
 
   getVenue = (() => {
     const fsVenueRecEndPoint = '//api.foursquare.com/v2/venues/explore?'
@@ -40,36 +44,12 @@ class App extends Component {
     axios.get(fsVenueRecEndPoint + new URLSearchParams(param))
       .then((res) => {
         // console.log(res.data.response.groups[0])
-        this.setState({venues: res.data.response.groups[0].items}, this.renderMap())
+        this.venues = res.data.response.groups[0].items
+        this.updateDisplayVenues()
       })
       .catch((error) => {
         console.log("Error! " + error)
       })
-
-  })
-
-  initMap = (() => {
-    const map = new window.google.maps.Map(document.getElementById('map'), {
-      center: {lat: 37.7700021, lng: -122.4492177},
-      zoom: 13
-    });
-
-    const infowindow = new window.google.maps.InfoWindow();
-
-    this.state.venues.map((fetchedVenue) => {
-      const marker = new window.google.maps.Marker({
-        position: {lat: fetchedVenue.venue.location.lat, lng: fetchedVenue.venue.location.lng},
-        map: map,
-        title: fetchedVenue.venue.name
-      });
-
-      const infoWindowContent = `${fetchedVenue.venue.name}`
-
-      marker.addListener('click', function(){
-        infowindow.setContent(infoWindowContent)
-        infowindow.open(map, marker)
-      })
-    })
   })
 
   render() {
@@ -77,16 +57,15 @@ class App extends Component {
     return (
       <div className='app'>
         <ResultListing 
-          fetchedVenues={this.state.venues}
+          displayVenues={this.state.displayVenues}
+          updateDisplayVenues={this.updateDisplayVenues}
         />
-        <div id='map'>
-        </div>
+        <Map
+          displayVenues={this.state.displayVenues}
+        />
       </div>
     );
   }
 }
 
-
-
 export default App;
- 

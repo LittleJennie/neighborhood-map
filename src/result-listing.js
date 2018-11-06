@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
 
 class ResultListing extends Component {
@@ -8,25 +7,15 @@ class ResultListing extends Component {
 	}
 
 	updateQuery = (query) => (
-		this.setState({query: query.trim() })
-	)
-
-	clearQuery = () => (
-		this.setState({query: ''})
+		this.setState({query: query})
 	)
 
   render() {
-		const { fetchedVenues } = this.props;
+		const { displayVenues, updateDisplayVenues } = this.props;
 		const { query } = this.state;
 
-		let showingVenues; 
-		if (query) {
-			const match = new RegExp (escapeRegExp(query), 'i');
-			showingVenues = fetchedVenues.filter((fectchedVenue) => match.test(fectchedVenue.venue.name))
-		} else {
-			showingVenues = fetchedVenues;
-		}
-		showingVenues.sort(sortBy('name'));
+		// updateDisplayVenues(query);
+		// displayVenues.sort(sortBy('name'));
 
     return (
 			<div id='listing'>
@@ -39,12 +28,15 @@ class ResultListing extends Component {
 						className='search-box'
 						role='search'
 						value={query}
-						onChange={(e) => this.updateQuery(e.target.value)}
+						onChange={(e) => {
+							this.updateQuery(e.target.value)
+							updateDisplayVenues(e.target.value)
+						}}
 						/>
 				</div>
 
 				<ol className='restaurant-listing'>
-					{showingVenues.map((showingVenue) => (
+					{displayVenues.map((showingVenue) => (
 						<div key={showingVenue.venue.id}>
 							<li className="individual-listing" >
 								<a role='button'>{showingVenue.venue.name}</a>
