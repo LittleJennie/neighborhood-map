@@ -11,8 +11,10 @@ class App extends Component {
     this.venues = []
     this.state = {
       displayVenues: [],
+      selectedVenueId: undefined
     }
     this.updateDisplayVenues = this.updateDisplayVenues.bind(this)
+    this.updateSelectedVenue = this.updateSelectedVenue.bind(this)
   }
   
   componentDidMount () {
@@ -30,6 +32,10 @@ class App extends Component {
         displayVenues: this.venues
       })
     }
+  })
+
+  updateSelectedVenue = ((clickedVenue) => {
+    this.setState({selectedVenueId: clickedVenue})
   })
 
   getVenue = (() => {
@@ -53,15 +59,17 @@ class App extends Component {
   })
 
   render() {
-    console.log(this.state.venues)
+    console.log(this.state.displayVenues)
     return (
       <div className='app'>
         <ResultListing 
           displayVenues={this.state.displayVenues}
           updateDisplayVenues={this.updateDisplayVenues}
+          updateSelectedVenue={this.updateSelectedVenue}
         />
         <Map
           displayVenues={this.state.displayVenues}
+          selectedVenueId={this.state.selectedVenueId}
         />
       </div>
     );

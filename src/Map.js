@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FSimg from './foursquare.png';
 
 function loadGoogleMapScript(url) {
 	const index = window.document.getElementsByTagName('script')[0];
@@ -33,7 +34,7 @@ class Map extends Component {
     });
 	})
 
-	addMarker = (displayVenues) => {
+	addMarker = (displayVenues, selectedVenueId) => {
 		if (this.map && displayVenues) {
 			const infowindow = new window.google.maps.InfoWindow();
 
@@ -46,12 +47,25 @@ class Map extends Component {
 					title: displayVenues[i].venue.name
 				});
 	
-				const infoWindowContent = `${displayVenues[i].venue.name}`
+				const infoWindowContent = `
+					<h2> <a href="http://foursquare.com/v/${displayVenues[i].venue.id}" target="_blank">${displayVenues[i].venue.name} </a></h2>
+					<p> <p class="address">Restaurant Address:</p> ${displayVenues[i].venue.location.address}, ${displayVenues[i].venue.location.city}, ${displayVenues[i].venue.location.state}</p>
+					<a href="https://foursquare.com/"> 
+						<img class="foursquare-image" src=${FSimg} alt="FourSquare Logo">
+					</a>
+				`
 	
 				marker.addListener('click', function(){
 					infowindow.setContent(infoWindowContent)
 					infowindow.open(this.map, marker)
+					marker.setAnimation(window.google.maps.Animation.DROP)
 				})
+
+				if (displayVenues[i].venue.id === selectedVenueId) {
+					infowindow.setContent(infoWindowContent)
+					infowindow.open(this.map, marker)
+					marker.setAnimation(window.google.maps.Animation.DROP)
+				}
 
 				markers.push(marker)
 			}
@@ -66,10 +80,10 @@ class Map extends Component {
 	}
 	
 	render() {
-		const { displayVenues } = this.props;
-		console.log(displayVenues)
+		const { displayVenues, selectedVenueId } = this.props;
+		console.log(selectedVenueId)
 		this.clearMarkers()
-		this.addMarker(displayVenues)
+		this.addMarker(displayVenues, selectedVenueId)
 		return(
 			<div id='map'>
 			</div>

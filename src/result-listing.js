@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import sortBy from 'sort-by'
 
 class ResultListing extends Component {
 	state ={
-		query: ''
+		query: '',
+		selection: ''
 	}
 
 	updateQuery = (query) => (
@@ -11,11 +11,8 @@ class ResultListing extends Component {
 	)
 
   render() {
-		const { displayVenues, updateDisplayVenues } = this.props;
+		const { displayVenues, updateDisplayVenues, updateSelectedVenue } = this.props;
 		const { query } = this.state;
-
-		// updateDisplayVenues(query);
-		// displayVenues.sort(sortBy('name'));
 
     return (
 			<div id='listing'>
@@ -39,7 +36,7 @@ class ResultListing extends Component {
 					{displayVenues.map((showingVenue) => (
 						<div key={showingVenue.venue.id}>
 							<li className="individual-listing" >
-								<a role='button'>{showingVenue.venue.name}</a>
+								<div role='button' onClick={() => {updateSelectedVenue(showingVenue.venue.id)}}>{showingVenue.venue.name}</div>
 							</li>
 						</div>
 					))}
