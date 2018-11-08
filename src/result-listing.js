@@ -15,11 +15,12 @@ class ResultListing extends Component {
 		const { query } = this.state;
 
     return (
-			<div id='listing'>
-				<h1 className='listing-title'>SF Chinese Food</h1>
+			<div id='listing' role="list">
+				<h1 className='listing-title' tabindex="1">SF Chinese Food</h1>
 				<div className='search-box-wrap'>
 					<input 
 						type='text' 
+						tabindex="1"
 						aria-labelledby='filter' 
 						placeholder='Search by restaurant name'
 						className='search-box'
@@ -32,10 +33,10 @@ class ResultListing extends Component {
 						/>
 				</div>
 
-				<ol className='restaurant-listing'>
+				<ol className='restaurant-listing' role="list">
 					{displayVenues.map((showingVenue) => (
 						<div key={showingVenue.venue.id}>
-							<li className="individual-listing" >
+							<li className="individual-listing" tabindex="1">
 								<div role='button' onClick={() => {updateSelectedVenue(showingVenue.venue.id)}}>{showingVenue.venue.name}</div>
 							</li>
 						</div>

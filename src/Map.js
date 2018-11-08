@@ -85,7 +85,7 @@ class Map extends Component {
 		this.clearMarkers()
 		this.addMarker(displayVenues, selectedVenueId)
 		return(
-			<div id='map'>
+			<div id='map' role="application">
 			</div>
 		)
 	}

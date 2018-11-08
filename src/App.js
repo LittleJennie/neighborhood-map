@@ -61,7 +61,7 @@ class App extends Component {
   render() {
     console.log(this.state.displayVenues)
     return (
-      <div className='app'>
+      <div className='app' role="main">
         <ResultListing 
           displayVenues={this.state.displayVenues}
           updateDisplayVenues={this.updateDisplayVenues}
