@@ -14,8 +14,8 @@ Infowindow of each marker contains the name and address of the restaurant. To se
 
 Note: Make sure you have the latest Node.js installed.
 
-Navigate to the directory that contains the project.
-Open up Git Bash in this location.
-Run 'npm install'.
-Run 'npm start'.
-Open http://localhost:3000
+1. Navigate to the directory that contains the project.
+2. Open up Git Bash in this location.
+3. Run 'npm install'.
+4. Run 'npm start'.
+5. Open http://localhost:3000
